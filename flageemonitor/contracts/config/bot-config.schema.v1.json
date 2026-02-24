@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flagee.cloud/schemas/flageemonitor/bot-config.v1.json",
+  "title": "FlageeMonitor Bot Config V1",
+  "type": "object",
+  "required": [
+    "PARAM_REDE",
+    "provider"
+  ],
+  "properties": {
+    "provider": {
+      "type": "string",
+      "description": "Software house/provider identifier. Use 'arius' as default for legacy clients.",
+      "examples": ["arius", "zanthus"]
+    },
+    "PARAM_REDE": {
+      "type": "string"
+    },
+    "PARAM_BASE_DIR": {
+      "type": "string",
+      "default": "/ariusmonitor"
+    },
+    "PARAM_REPO_URL": {
+      "type": "string",
+      "format": "uri"
+    },
+    "PARAM_CRON_ACTIONS": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "TIMEZONE": {
+      "type": "string",
+      "default": "America/Sao_Paulo"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,13 @@
+# Docs Index
+
+- `00-context.md`: contexto atual e lacunas.
+- `01-target-architecture.md`: arquitetura alvo core + provider.
+- `02-business-layer.md`: capacidades e casos de uso de negocio.
+- `03-provider-model.md`: contrato e fronteiras do provider.
+- `04-action-naming.md`: convencao de actions canonicas e aliases.
+- `05-migration-plan.md`: fases de migracao sem quebra.
+- `06-endpoint-compatibility.md`: diretrizes de compatibilidade para client endpoint.
+- `07-repositories-and-access.md`: estrategia de repositorios (interno vs deploy cliente).
+- `08-proxy-deploy-promotion.md`: fluxo seguro de promocao de proxy-dev para proxy-deploy.
+- `09-release-playbook.md`: playbook de publicacao para server/proxy-dev/proxy-deploy.
+- `adr/`: decisoes arquiteturais registradas.

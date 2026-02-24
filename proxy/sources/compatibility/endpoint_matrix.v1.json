@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "levels": {
+    "L1": "production_supported",
+    "L2": "supported_with_restrictions",
+    "L3": "best_effort"
+  },
+  "matrix": [
+    {"distro": "slackware", "versions": ["13.x"], "arch": ["x86_64", "i686"], "level": "L2"},
+    {"distro": "ubuntu", "versions": ["14.04", "16.04"], "arch": ["x86_64", "i686"], "level": "L2"},
+    {"distro": "ubuntu", "versions": ["18.04+", "20.04", "22.04", "24.04"], "arch": ["x86_64"], "level": "L1"},
+    {"distro": "ubuntu", "versions": ["18.04+", "20.04", "22.04", "24.04"], "arch": ["i686"], "level": "L2"},
+    {"distro": "mint", "versions": ["17.x"], "arch": ["x86_64", "i686"], "level": "L2"},
+    {"distro": "mint", "versions": ["21.x"], "arch": ["x86_64"], "level": "L1"}
+  ]
+}

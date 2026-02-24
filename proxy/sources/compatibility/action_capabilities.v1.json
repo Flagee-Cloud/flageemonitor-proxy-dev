@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "defaults": {
+    "minimum_level": "L2"
+  },
+  "rules": {
+    "collect_coupons": {"minimum_level": "L3"},
+    "collect_coupon_details": {"minimum_level": "L3"},
+    "collect_coupon_lv": {"minimum_level": "L3"},
+    "collect_sat_config": {"minimum_level": "L3"},
+    "collect_checkout_status": {"minimum_level": "L3"},
+    "diagnose_env": {"minimum_level": "L3"},
+    "install_endpoint_agent": {"minimum_level": "L2"},
+    "uninstall_endpoint_agent": {"minimum_level": "L2"},
+    "update_endpoint_config": {"minimum_level": "L2"},
+    "update_endpoint_timezone": {"minimum_level": "L2"},
+    "shutdown_endpoint": {"minimum_level": "L2"},
+    "test_endpoint_connection": {"minimum_level": "L2"},
+    "test_endpoint_privilege": {"minimum_level": "L2"},
+    "refresh_endpoint_printer": {"minimum_level": "L2"},
+    "register_endpoints": {"minimum_level": "L2"}
+  }
+}

@@ -1,0 +1,30 @@
+version: 1
+canonical_actions:
+  - name: install_endpoint_agent
+    legacy_aliases: [pdv_install]
+  - name: uninstall_endpoint_agent
+    legacy_aliases: [pdv_uninstall]
+  - name: update_endpoint_config
+    legacy_aliases: [pdv_update_config]
+  - name: update_endpoint_timezone
+    legacy_aliases: [pdv_update_timezone]
+  - name: shutdown_endpoint
+    legacy_aliases: [pdv_shutdown]
+  - name: test_endpoint_connection
+    legacy_aliases: [pdv_test_connection]
+  - name: test_endpoint_privilege
+    legacy_aliases: [pdv_test_sudo]
+  - name: refresh_endpoint_printer
+    legacy_aliases: [pdv_atualiza_impressora]
+  - name: register_endpoints
+    legacy_aliases: [pdv_auto_register]
+  - name: collect_coupons
+    legacy_aliases: [cupons]
+  - name: collect_coupon_details
+    legacy_aliases: [cupons_detalhes]
+  - name: collect_coupon_lv
+    legacy_aliases: [cupons_lv]
+  - name: collect_sat_config
+    legacy_aliases: [sat_config]
+  - name: collect_checkout_status
+    legacy_aliases: [status_caixa]

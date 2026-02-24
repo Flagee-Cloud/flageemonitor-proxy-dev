@@ -1,0 +1,7 @@
+mysql_connector_repackaged==0.3.1
+paramiko==3.5.1
+pexpect==4.9.0
+psutil==7.0.0
+Requests==2.32.5
+scapy==2.6.1
+urllib3==2.5.0

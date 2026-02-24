@@ -12,6 +12,14 @@ Bootstrap host-side minimo para executar o proxy em container.
 
 Script: `linux/install_flageemonitor.sh`
 
+Opcao recomendada (API entrega script apos validar token):
+
+```bash
+curl -fsSL -H "X-Bot-Token: TOKEN_DO_CLIENTE" \
+  https://api-ariusmonitor.flagee.cloud/api/bootstrap/install.sh \
+  | sudo bash -s -- TOKEN_DO_CLIENTE
+```
+
 Exemplo:
 
 ```bash

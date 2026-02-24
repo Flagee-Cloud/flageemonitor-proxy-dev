@@ -31,6 +31,21 @@ Exemplos:
 - `pdv_atualiza_impressora` -> `refresh_endpoint_printer`
 - `pdv_auto_register` -> `register_endpoints`
 
+## Aliases genericos adicionais
+
+- `install_host_agent` -> `install_endpoint_agent`
+- `install_client_agent` -> `install_endpoint_agent`
+- `uninstall_host_agent` -> `uninstall_endpoint_agent`
+- `uninstall_client_agent` -> `uninstall_endpoint_agent`
+- `update_host_config` -> `update_endpoint_config`
+- `update_client_config` -> `update_endpoint_config`
+- `update_host_timezone` -> `update_endpoint_timezone`
+- `shutdown_host` -> `shutdown_endpoint`
+- `test_host_connection` -> `test_endpoint_connection`
+- `test_host_privilege` -> `test_endpoint_privilege`
+- `refresh_host_printer` -> `refresh_endpoint_printer`
+- `register_hosts` -> `register_endpoints`
+
 ## Politica de deprecacao
 
 1. Introduz canonico + alias ativo.

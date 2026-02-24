@@ -1,0 +1,28 @@
+version: 1
+provider: zanthus
+profiles:
+  - id: linux_legacy_32
+    description: Linux legado 32 bits (ex.: Slackware 13, Ubuntu 14 32-bit)
+    os_family: linux
+    arch: x86
+    required_capabilities:
+      - ssh_exec
+      - file_transfer
+      - shell_script
+    recommended_transport: ssh
+  - id: linux_modern_64
+    description: Linux moderno 64 bits (Ubuntu 20+ / Mint 21+)
+    os_family: linux
+    arch: x86_64
+    required_capabilities:
+      - ssh_exec
+      - file_transfer
+      - shell_script
+    optional_capabilities:
+      - container_runtime
+      - systemd_service
+    recommended_transport: ssh
+host_types:
+  - endpoint
+  - concentrator
+  - application_server

@@ -1,0 +1,13 @@
+version: 1
+provider: zanthus
+notes: |
+  Este arquivo registra desvios de comportamento por provider sem alterar o core.
+  A primeira fase deve manter tudo no comportamento default (no-op overrides).
+
+action_overrides: []
+# exemplo futuro:
+# - canonical_action: install_endpoint_agent
+#   implementation: providers.zanthus.actions.install_endpoint_agent
+#   rollout:
+#     mode: canary
+#     percent: 10

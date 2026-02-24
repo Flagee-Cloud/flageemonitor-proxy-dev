@@ -2,22 +2,31 @@ version: 1
 canonical_actions:
   - name: install_endpoint_agent
     legacy_aliases: [pdv_install]
+    generic_aliases: [install_host_agent, install_client_agent]
   - name: uninstall_endpoint_agent
     legacy_aliases: [pdv_uninstall]
+    generic_aliases: [uninstall_host_agent, uninstall_client_agent]
   - name: update_endpoint_config
     legacy_aliases: [pdv_update_config]
+    generic_aliases: [update_host_config, update_client_config]
   - name: update_endpoint_timezone
     legacy_aliases: [pdv_update_timezone]
+    generic_aliases: [update_host_timezone]
   - name: shutdown_endpoint
     legacy_aliases: [pdv_shutdown]
+    generic_aliases: [shutdown_host]
   - name: test_endpoint_connection
     legacy_aliases: [pdv_test_connection]
+    generic_aliases: [test_host_connection]
   - name: test_endpoint_privilege
     legacy_aliases: [pdv_test_sudo]
+    generic_aliases: [test_host_privilege]
   - name: refresh_endpoint_printer
     legacy_aliases: [pdv_atualiza_impressora]
+    generic_aliases: [refresh_host_printer]
   - name: register_endpoints
     legacy_aliases: [pdv_auto_register]
+    generic_aliases: [register_hosts]
   - name: collect_coupons
     legacy_aliases: [cupons]
   - name: collect_coupon_details

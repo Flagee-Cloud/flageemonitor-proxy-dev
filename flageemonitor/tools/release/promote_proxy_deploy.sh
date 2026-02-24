@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
-DEPLOY_REMOTE_DEFAULT="flageemonitor-proxy-deploy"
+DEPLOY_REMOTE_DEFAULT="flageemonitor-proxy"
 DEPLOY_BRANCH_DEFAULT="main"
 PUSH_CHANGES=0
 DRY_RUN=0
@@ -214,7 +214,7 @@ if [[ "$DRY_RUN" -eq 1 ]]; then
   exit 0
 fi
 
-COMMIT_MSG="release(proxy-deploy): promote from $(git -C "$ROOT_DIR" rev-parse --short HEAD)"
+COMMIT_MSG="release(proxy): promote from $(git -C "$ROOT_DIR" rev-parse --short HEAD)"
 git commit -m "$COMMIT_MSG"
 
 echo "Commit criado no staging de deploy:"

@@ -15,7 +15,7 @@ DEST_DIR="/ariusmonitor"
 PYTHON_COMPAT="3.12"
 PYTHON_BIN="/usr/bin/python${PYTHON_COMPAT}"
 VENV_DIR="${DEST_DIR}/venv"
-REPO_URL="${FLAGEEMONITOR_DEPLOY_REPO_URL:-git@github.com:Flagee-Cloud/flageemonitor-proxy-deploy.git}"
+REPO_URL="${FLAGEEMONITOR_DEPLOY_REPO_URL:-git@github.com:Flagee-Cloud/flageemonitor-proxy.git}"
 REPO_BRANCH="${FLAGEEMONITOR_DEPLOY_REPO_BRANCH:-main}"
 
 # -----------------------------------------------------------------------------

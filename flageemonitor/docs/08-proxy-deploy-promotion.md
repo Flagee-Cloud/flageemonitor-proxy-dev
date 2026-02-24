@@ -1,6 +1,6 @@
 # Proxy Deploy Promotion
 
-Fluxo oficial para promover artefatos do ambiente DEV para o repositório de DEPLOY do proxy.
+Fluxo oficial para promover artefatos do ambiente DEV para o repositório de cliente do proxy.
 
 ## Script
 
@@ -9,7 +9,7 @@ Fluxo oficial para promover artefatos do ambiente DEV para o repositório de DEP
 ## O que o script faz
 
 - valida que o runtime em `proxy/runtime` esta protegido por PyArmor;
-- clona o repositório de destino (`flageemonitor-proxy-deploy`);
+- clona o repositório de destino (`flageemonitor-proxy`);
 - aplica allowlist de caminhos permitidos;
 - bloqueia conteúdo proibido (`proxy/sources`, `server`, etc.);
 - busca padrões de segredo (tokens/chaves privadas);
@@ -34,7 +34,7 @@ Override de remote/branch:
 
 ```bash
 /ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh \
-  --deploy-remote flageemonitor-proxy-deploy \
+  --deploy-remote flageemonitor-proxy \
   --deploy-branch main \
   --push
 ```
@@ -49,5 +49,5 @@ bash /ariusmonitor/build/build_protegido.sh
 
 ## Politica
 
-- Conteudo de cliente deve sair somente via `proxy-deploy`.
+- Conteudo de cliente deve sair somente via `proxy`.
 - Codigo interno (`server`, `proxy/sources`) nao deve ser promovido para deploy.

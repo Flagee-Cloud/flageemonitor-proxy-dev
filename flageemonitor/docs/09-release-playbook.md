@@ -1,4 +1,4 @@
-# Release Playbook (Server / Proxy DEV / Proxy DEPLOY)
+# Release Playbook (Server / Proxy DEV / Proxy)
 
 Fluxo operacional padrao para publicar conteudo nos repositorios separados do FlageeMonitor.
 
@@ -6,7 +6,7 @@ Fluxo operacional padrao para publicar conteudo nos repositorios separados do Fl
 
 - Server: `/ariusmonitor/flageemonitor/tools/release/promote_server.sh`
 - Proxy DEV: `/ariusmonitor/flageemonitor/tools/release/promote_proxy_dev.sh`
-- Proxy DEPLOY: `/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh`
+- Proxy (cliente): `/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh`
 
 ## Ordem recomendada
 
@@ -17,7 +17,7 @@ Fluxo operacional padrao para publicar conteudo nos repositorios separados do Fl
 - `/ariusmonitor/flageemonitor/tools/release/promote_proxy_dev.sh --push`
 4. Publicar para `server` (interno):
 - `/ariusmonitor/flageemonitor/tools/release/promote_server.sh --push`
-5. Promover para `proxy-deploy` (cliente):
+5. Promover para `proxy` (cliente):
 - `/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh --push`
 
 ## Dry-run obrigatorio
@@ -35,7 +35,7 @@ Antes de qualquer push, execute dry-run:
 - Allowlist por repositorio (somente caminhos permitidos).
 - Bloqueio de caminhos proibidos (ex.: codigo interno em repo de deploy).
 - Scanner de segredo basico (tokens/chaves privadas).
-- No caso de `proxy-deploy`, validacao obrigatoria de runtime protegido por PyArmor.
+- No caso de `proxy` (cliente), validacao obrigatoria de runtime protegido por PyArmor.
 
 ## Nota sobre imagem Docker
 

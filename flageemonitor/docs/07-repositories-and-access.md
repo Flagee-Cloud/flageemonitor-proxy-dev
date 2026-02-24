@@ -10,14 +10,14 @@ Este documento define a separacao entre repositorios internos e repositorios usa
 2. Proxy DEV (interno de desenvolvimento)
 - `git@github.com:Flagee-Cloud/flageemonitor-proxy-dev.git`
 
-3. Proxy DEPLOY (artefatos/estrutura para ambiente cliente)
-- `git@github.com:Flagee-Cloud/flageemonitor-proxy-deploy.git`
+3. Proxy (artefatos/estrutura para ambiente cliente)
+- `git@github.com:Flagee-Cloud/flageemonitor-proxy.git`
 
 ## Politica de visibilidade
 
 - `flageemonitor-server`: acesso apenas equipe interna Flagee.
 - `flageemonitor-proxy-dev`: privado interno (codigo/fundacao/iteracao).
-- `flageemonitor-proxy-deploy`: privado, mas preparado para operacao em cliente (conteudo minimo de deploy).
+- `flageemonitor-proxy`: privado, mas preparado para operacao em cliente (conteudo minimo de deploy).
 
 ## Chaves e autenticacao
 
@@ -27,15 +27,15 @@ Este documento define a separacao entre repositorios internos e repositorios usa
 ## Diretriz operacional
 
 - Build e validacao ocorrem em `proxy-dev`.
-- Publicacao controlada promove conteudo para `proxy-deploy`.
-- Cliente consome apenas `proxy-deploy`.
+- Publicacao controlada promove conteudo para `proxy`.
+- Cliente consome apenas `proxy`.
 - Nenhum fluxo de cliente deve depender de `flageemonitor-server`.
 
 ## Compatibilidade com legado
 
 No script legado `proxy/scripts/gitclone.sh`, o repositorio default passou a ser:
 
-- `git@github.com:Flagee-Cloud/flageemonitor-proxy-deploy.git`
+- `git@github.com:Flagee-Cloud/flageemonitor-proxy.git`
 
 Com overrides opcionais:
 

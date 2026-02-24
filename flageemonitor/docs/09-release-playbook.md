@@ -49,3 +49,8 @@ Tags atuais seguem:
 
 - `ghcr.io/flagee-cloud/flageemonitor-client:<short_sha>`
 - `ghcr.io/flagee-cloud/flageemonitor-client:latest`
+
+## Versionamento de release
+
+- Padrao oficial de tag: `flageemonitor-vMAJOR.MINOR.PATCH`
+- Guia rapido: `docs/11-versioning-and-release-tags.md`

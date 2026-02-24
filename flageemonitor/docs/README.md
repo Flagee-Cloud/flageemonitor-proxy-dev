@@ -10,4 +10,6 @@
 - `07-repositories-and-access.md`: estrategia de repositorios (interno vs deploy cliente).
 - `08-proxy-deploy-promotion.md`: fluxo seguro de promocao de proxy-dev para proxy-deploy.
 - `09-release-playbook.md`: playbook de publicacao para server/proxy-dev/proxy-deploy.
+- `10-ci-budget-mode.md`: estrategia de CI/CD de baixo consumo para GitHub Free.
+- `11-versioning-and-release-tags.md`: convencao de versao e checklist curto de release.
 - `adr/`: decisoes arquiteturais registradas.

@@ -24,8 +24,9 @@ Checklist padrao para adicionar um novo provider sem quebrar os existentes.
 ## Fase 4 - Release
 
 1. Regenerar runtime protegido (`build_protegido.sh`).
-2. Promover `proxy-dev`, `server`, `proxy`.
-3. Publicar tag `flageemonitor-vMAJOR.MINOR.PATCH`.
+2. Promover `proxy-dev` e `server`.
+3. Publicar imagem de cliente no GHCR.
+4. Publicar tag `flageemonitor-vMAJOR.MINOR.PATCH`.
 
 ## Regra de seguranca
 

@@ -10,14 +10,14 @@ Este documento define a separacao entre repositorios internos e repositorios usa
 2. Proxy DEV (interno de desenvolvimento)
 - `git@github.com:Flagee-Cloud/flageemonitor-proxy-dev.git`
 
-3. Proxy (artefatos/estrutura para ambiente cliente)
+3. Proxy (repositorio image-only)
 - `git@github.com:Flagee-Cloud/flageemonitor-proxy.git`
 
 ## Politica de visibilidade
 
 - `flageemonitor-server`: acesso apenas equipe interna Flagee.
 - `flageemonitor-proxy-dev`: privado interno (codigo/fundacao/iteracao).
-- `flageemonitor-proxy`: privado, mas preparado para operacao em cliente (conteudo minimo de deploy).
+- `flageemonitor-proxy`: image-only. Nao hospeda mais runtime/scripts de deploy.
 
 ## Chaves e autenticacao
 
@@ -27,11 +27,11 @@ Este documento define a separacao entre repositorios internos e repositorios usa
 ## Diretriz operacional
 
 - Build e validacao ocorrem em `proxy-dev`.
-- Publicacao controlada promove conteudo para `proxy`.
-- Cliente consome apenas `proxy`.
+- Publicacao cliente ocorre via imagem no GHCR.
+- Cliente consome apenas imagem versionada.
 - Nenhum fluxo de cliente deve depender de `flageemonitor-server`.
 
-## Compatibilidade com legado
+## Bootstrap legado
 
 No script legado `proxy/scripts/gitclone.sh`, o repositorio default passou a ser:
 
@@ -42,7 +42,7 @@ Com overrides opcionais:
 - `FLAGEEMONITOR_DEPLOY_REPO_URL`
 - `FLAGEEMONITOR_DEPLOY_REPO_BRANCH`
 
-## Promocao DEV -> DEPLOY
+## Publicacao de cliente
 
-- Use o fluxo documentado em `docs/08-proxy-deploy-promotion.md`.
-- A promocao usa allowlist e valida PyArmor antes de publicar.
+- Use `flageemonitor/proxy/scripts/docker/publish_image.sh`.
+- O script valida runtime protegido por PyArmor antes de publicar.

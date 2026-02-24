@@ -20,7 +20,7 @@ cd /ariusmonitor
 bash /ariusmonitor/build/build_protegido.sh
 /ariusmonitor/flageemonitor/tools/release/promote_proxy_dev.sh --push
 /ariusmonitor/flageemonitor/tools/release/promote_server.sh --push
-/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh --push
+/ariusmonitor/flageemonitor/proxy/scripts/docker/publish_image.sh
 ```
 
 Depois, criar tag formal:
@@ -34,4 +34,3 @@ Depois, criar tag formal:
 - Push da tag `flageemonitor-v*` aciona publish manual/tag em
   `.github/workflows/flageemonitor-manual-publish.yml`.
 - Em dias normais, evitar tag para nao consumir minutos de CI desnecessariamente.
-

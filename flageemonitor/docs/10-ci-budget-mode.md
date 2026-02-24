@@ -31,4 +31,3 @@ Configuracao de CI/CD focada em baixo consumo de minutos no plano Free.
 - O script de publish ja bloqueia runtime sem PyArmor.
 - `concurrency` ativo nos workflows para cancelar execucoes antigas.
 - `timeout-minutes` reduzido para evitar consumo desnecessario.
-

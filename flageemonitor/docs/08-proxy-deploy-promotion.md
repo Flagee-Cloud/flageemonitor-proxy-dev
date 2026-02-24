@@ -1,53 +1,26 @@
-# Proxy Deploy Promotion
+# Proxy Deploy Promotion (Descontinuado)
 
-Fluxo oficial para promover artefatos do ambiente DEV para o repositório de cliente do proxy.
+Este fluxo foi descontinuado.
 
-## Script
+## Motivo
 
-- `/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh`
+- O repositorio `flageemonitor-proxy` agora e image-only.
+- Nao promovemos mais runtime/scripts para repositorio de cliente.
 
-## O que o script faz
+## Fluxo atual
 
-- valida que o runtime em `proxy/runtime` esta protegido por PyArmor;
-- clona o repositório de destino (`flageemonitor-proxy`);
-- aplica allowlist de caminhos permitidos;
-- bloqueia conteúdo proibido (`proxy/sources`, `server`, etc.);
-- busca padrões de segredo (tokens/chaves privadas);
-- cria commit de promoção;
-- faz push somente com `--push`.
-
-## Uso
-
-Dry-run (recomendado primeiro):
-
-```bash
-/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh --dry-run
-```
-
-Promover com push:
-
-```bash
-/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh --push
-```
-
-Override de remote/branch:
-
-```bash
-/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh \
-  --deploy-remote flageemonitor-proxy \
-  --deploy-branch main \
-  --push
-```
-
-## Requisito obrigatório
-
-Antes de promover, regenerar runtime protegido:
+1. Regenerar runtime protegido:
 
 ```bash
 bash /ariusmonitor/build/build_protegido.sh
 ```
 
-## Politica
+2. Publicar imagem:
 
-- Conteudo de cliente deve sair somente via `proxy`.
-- Codigo interno (`server`, `proxy/sources`) nao deve ser promovido para deploy.
+```bash
+/ariusmonitor/flageemonitor/proxy/scripts/docker/publish_image.sh
+```
+
+## Observacao
+
+- O script `tools/release/promote_proxy_deploy.sh` permanece apenas por compatibilidade historica e retorna erro orientando o novo fluxo.

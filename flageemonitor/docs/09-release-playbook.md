@@ -1,4 +1,4 @@
-# Release Playbook (Server / Proxy DEV / Proxy)
+# Release Playbook (Server / Proxy DEV / Image Publish)
 
 Fluxo operacional padrao para publicar conteudo nos repositorios separados do FlageeMonitor.
 
@@ -6,7 +6,7 @@ Fluxo operacional padrao para publicar conteudo nos repositorios separados do Fl
 
 - Server: `/ariusmonitor/flageemonitor/tools/release/promote_server.sh`
 - Proxy DEV: `/ariusmonitor/flageemonitor/tools/release/promote_proxy_dev.sh`
-- Proxy (cliente): `/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh`
+- Publish image: `/ariusmonitor/flageemonitor/proxy/scripts/docker/publish_image.sh`
 
 ## Ordem recomendada
 
@@ -17,8 +17,8 @@ Fluxo operacional padrao para publicar conteudo nos repositorios separados do Fl
 - `/ariusmonitor/flageemonitor/tools/release/promote_proxy_dev.sh --push`
 4. Publicar para `server` (interno):
 - `/ariusmonitor/flageemonitor/tools/release/promote_server.sh --push`
-5. Promover para `proxy` (cliente):
-- `/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh --push`
+5. Publicar imagem para cliente:
+- `/ariusmonitor/flageemonitor/proxy/scripts/docker/publish_image.sh`
 
 ## Dry-run obrigatorio
 
@@ -27,15 +27,14 @@ Antes de qualquer push, execute dry-run:
 ```bash
 /ariusmonitor/flageemonitor/tools/release/promote_proxy_dev.sh --dry-run
 /ariusmonitor/flageemonitor/tools/release/promote_server.sh --dry-run
-/ariusmonitor/flageemonitor/tools/release/promote_proxy_deploy.sh --dry-run
 ```
 
 ## Guardrails ativos
 
 - Allowlist por repositorio (somente caminhos permitidos).
-- Bloqueio de caminhos proibidos (ex.: codigo interno em repo de deploy).
+- Bloqueio de caminhos proibidos em repos internos.
 - Scanner de segredo basico (tokens/chaves privadas).
-- No caso de `proxy` (cliente), validacao obrigatoria de runtime protegido por PyArmor.
+- Validacao obrigatoria de runtime protegido por PyArmor no publish de imagem.
 
 ## Nota sobre imagem Docker
 

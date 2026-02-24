@@ -19,6 +19,10 @@ from zabbix_client import (
     get_hosts_by_trigger_name,
 )
 from process_one import process_one
+from provider_adapter import (
+    resolve_provider,
+    translate_action_for_provider,
+)
 from actions import (
     get_action_version,
     resolve_action_name,
@@ -110,6 +114,11 @@ def parse_args():
         choices=["off", "warn", "enforce"],
         help="Modo de compatibilidade de endpoint por host (default via config: PARAM_COMPATIBILITY_MODE ou 'warn')."
     )
+    parser.add_argument(
+        "--provider",
+        type=str,
+        help="Provider alvo da execução (ex: arius, zanthus). Default via config PARAM_PROVIDER ou 'arius'.",
+    )
     
     parser.add_argument("--dry-run", action="store_true", help="Não altera nada nos hosts; apenas resolve templates e mostra o conteúdo que seria aplicado.")
 
@@ -172,14 +181,28 @@ def main():
         sys.exit(1)
 
     requested_action = args.action
-    resolved_action, canonical_action, used_alias = resolve_action_name(requested_action)
+    args.provider = resolve_provider(config, args)
+    provider_translated_action, translated_by_provider = translate_action_for_provider(
+        requested_action,
+        args.provider,
+        logger,
+    )
+
+    resolved_action, canonical_action, used_alias = resolve_action_name(provider_translated_action)
     args.requested_action = requested_action
+    args.provider_requested_action = provider_translated_action
     args.canonical_action = canonical_action
     args.action = resolved_action
 
-    if used_alias:
+    if translated_by_provider:
         logger.info(
-            f"Ação recebida '{requested_action}' resolvida para '{resolved_action}' (canônica: '{canonical_action}')."
+            f"Provider '{args.provider}' traduziu ação '{requested_action}' para '{provider_translated_action}'."
+        )
+
+    if used_alias or translated_by_provider:
+        logger.info(
+            f"Ação recebida '{requested_action}' resolvida para '{resolved_action}' "
+            f"(canônica: '{canonical_action}', provider: '{args.provider}')."
         )
 
     logger.info(f"Ação '{args.action}' versão {get_action_version(args.action)}")

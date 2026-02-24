@@ -13,6 +13,7 @@ Checklist padrao para adicionar um novo provider sem quebrar os existentes.
 1. Implementar adaptador provider-only (sem alterar `shared/`).
 2. Reusar actions canonicas sempre que possivel.
 3. Criar override apenas quando houver diferenca real de provider.
+4. Habilitar rollout inicial em `0%` e subir gradualmente (`5%`, `20%`, `50%`, `100%`).
 
 ## Fase 3 - Compatibilidade
 

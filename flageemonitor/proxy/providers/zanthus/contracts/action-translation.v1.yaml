@@ -1,0 +1,12 @@
+version: 1
+provider: zanthus
+external_to_canonical:
+  install_terminal_agent: install_endpoint_agent
+  remove_terminal_agent: uninstall_endpoint_agent
+  sync_terminal_config: update_endpoint_config
+  sync_terminal_timezone: update_endpoint_timezone
+  terminal_shutdown: shutdown_endpoint
+  terminal_ping: test_endpoint_connection
+  terminal_privilege_check: test_endpoint_privilege
+  terminal_printer_refresh: refresh_endpoint_printer
+  terminals_register: register_endpoints

@@ -25,6 +25,16 @@ O provider define:
 - Se capability nao suportada: retornar erro funcional claro e auditavel.
 - Se action legada recebida: resolver via alias para action canonica.
 
+## Rollout por provider
+
+- O runtime aceita rollout percentual por host para providers novos.
+- Chaves de configuracao:
+- `PARAM_ROLLOUT_<PROVIDER>` (ex: `PARAM_ROLLOUT_ZANTHUS=20`)
+- `PARAM_PROVIDER_ROLLOUT` como mapa (ex: `{\"zanthus\": 20}`)
+- Default seguro:
+- `arius`: `100%`
+- providers nao legados: `0%` ate habilitacao explicita.
+
 ## Beneficio
 
 O core permanece unico; variacoes entram apenas onde realmente diferem.

@@ -20,6 +20,12 @@ curl -fsSL -H "X-Bot-Token: TOKEN_DO_CLIENTE" \
   | sudo bash -s -- TOKEN_DO_CLIENTE
 ```
 
+Health do bootstrap:
+
+```bash
+curl -fsSL https://monitor-api.flagee.cloud/api/bootstrap/health
+```
+
 Exemplo:
 
 ```bash

@@ -7,11 +7,12 @@ RUNTIME_NAME_DEFAULT="flageemonitor"
 CONTAINER_ROOT_DEFAULT="/flageemonitor"
 WATCHTOWER_IMAGE_DEFAULT="containrrr/watchtower:1.7.1"
 WATCHTOWER_INTERVAL_DEFAULT="300"
+WITH_WATCHTOWER_DEFAULT="1"
 
 usage() {
   cat <<USAGE
 Uso:
-  $0 <TOKEN_CLIENTE> [--api-base URL] [--image IMAGE] [--runtime-name NAME] [--container-root PATH] [--ghcr-user USER] [--ghcr-token TOKEN] [--with-watchtower] [--watchtower-image IMAGE] [--watchtower-interval SEGUNDOS]
+  $0 <TOKEN_CLIENTE> [--api-base URL] [--image IMAGE] [--runtime-name NAME] [--container-root PATH] [--ghcr-user USER] [--ghcr-token TOKEN] [--with-watchtower|--without-watchtower] [--watchtower-image IMAGE] [--watchtower-interval SEGUNDOS]
 
 Exemplo:
   $0 TOKEN_DO_CLIENTE --runtime-name flageemonitor
@@ -37,7 +38,7 @@ RUNTIME_NAME="$RUNTIME_NAME_DEFAULT"
 CONTAINER_ROOT="$CONTAINER_ROOT_DEFAULT"
 GHCR_USER=""
 GHCR_TOKEN=""
-WITH_WATCHTOWER=0
+WITH_WATCHTOWER="$WITH_WATCHTOWER_DEFAULT"
 WATCHTOWER_IMAGE="$WATCHTOWER_IMAGE_DEFAULT"
 WATCHTOWER_INTERVAL="$WATCHTOWER_INTERVAL_DEFAULT"
 
@@ -69,6 +70,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --with-watchtower)
       WITH_WATCHTOWER=1
+      shift
+      ;;
+    --without-watchtower)
+      WITH_WATCHTOWER=0
       shift
       ;;
     --watchtower-image)
@@ -107,6 +112,10 @@ fi
 
 if ! [[ "$WATCHTOWER_INTERVAL" =~ ^[0-9]+$ ]]; then
   echo "watchtower-interval invalido: '$WATCHTOWER_INTERVAL' (use segundos inteiros)."
+  exit 1
+fi
+if [[ "$WITH_WATCHTOWER" != "0" && "$WITH_WATCHTOWER" != "1" ]]; then
+  echo "with-watchtower invalido: '$WITH_WATCHTOWER' (use 0 ou 1)."
   exit 1
 fi
 
@@ -252,6 +261,8 @@ if [[ "$watchtower_enabled" == "1" ]]; then
     --cleanup \
     --interval "$watchtower_interval" \
     "$runtime_name"
+else
+  docker rm -f "${runtime_name}-watchtower" >/dev/null 2>&1 || true
 fi
 SCRIPT
 chmod +x /usr/local/bin/flageemonitor-update-image

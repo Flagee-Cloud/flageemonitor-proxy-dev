@@ -20,12 +20,13 @@ curl -fsSL -H "X-Bot-Token: TOKEN_DO_CLIENTE" \
   | sudo bash -s -- TOKEN_DO_CLIENTE
 ```
 
-Com Watchtower oficial no fluxo:
+Watchtower ja vem habilitado por padrao nesse fluxo.
+Para desligar explicitamente:
 
 ```bash
 curl -fsSL -H "X-Bot-Token: TOKEN_DO_CLIENTE" \
   https://monitor-api.flagee.cloud/api/bootstrap/install.sh \
-  | sudo bash -s -- TOKEN_DO_CLIENTE --with-watchtower --watchtower-interval 300
+  | sudo bash -s -- TOKEN_DO_CLIENTE --without-watchtower
 ```
 
 Health do bootstrap:

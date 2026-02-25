@@ -5,11 +5,13 @@ API_BASE_DEFAULT="https://api-ariusmonitor.flagee.cloud/api/ingest"
 IMAGE_DEFAULT="ghcr.io/flagee-cloud/flageemonitor-client:latest"
 RUNTIME_NAME_DEFAULT="flageemonitor"
 CONTAINER_ROOT_DEFAULT="/flageemonitor"
+WATCHTOWER_IMAGE_DEFAULT="containrrr/watchtower:1.7.1"
+WATCHTOWER_INTERVAL_DEFAULT="300"
 
 usage() {
   cat <<USAGE
 Uso:
-  $0 <TOKEN_CLIENTE> [--api-base URL] [--image IMAGE] [--runtime-name NAME] [--container-root PATH] [--ghcr-user USER] [--ghcr-token TOKEN]
+  $0 <TOKEN_CLIENTE> [--api-base URL] [--image IMAGE] [--runtime-name NAME] [--container-root PATH] [--ghcr-user USER] [--ghcr-token TOKEN] [--with-watchtower] [--watchtower-image IMAGE] [--watchtower-interval SEGUNDOS]
 
 Exemplo:
   $0 TOKEN_DO_CLIENTE --runtime-name flageemonitor
@@ -35,6 +37,9 @@ RUNTIME_NAME="$RUNTIME_NAME_DEFAULT"
 CONTAINER_ROOT="$CONTAINER_ROOT_DEFAULT"
 GHCR_USER=""
 GHCR_TOKEN=""
+WITH_WATCHTOWER=0
+WATCHTOWER_IMAGE="$WATCHTOWER_IMAGE_DEFAULT"
+WATCHTOWER_INTERVAL="$WATCHTOWER_INTERVAL_DEFAULT"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -62,6 +67,18 @@ while [[ $# -gt 0 ]]; do
       GHCR_TOKEN="$2"
       shift 2
       ;;
+    --with-watchtower)
+      WITH_WATCHTOWER=1
+      shift
+      ;;
+    --watchtower-image)
+      WATCHTOWER_IMAGE="$2"
+      shift 2
+      ;;
+    --watchtower-interval)
+      WATCHTOWER_INTERVAL="$2"
+      shift 2
+      ;;
     -h|--help)
       usage
       exit 0
@@ -85,6 +102,11 @@ if [[ -n "${GHCR_USER}" && -z "${GHCR_TOKEN}" ]]; then
 fi
 if [[ -n "${GHCR_TOKEN}" && -z "${GHCR_USER}" ]]; then
   echo "GHCR_USER ausente. Passe --ghcr-user."
+  exit 1
+fi
+
+if ! [[ "$WATCHTOWER_INTERVAL" =~ ^[0-9]+$ ]]; then
+  echo "watchtower-interval invalido: '$WATCHTOWER_INTERVAL' (use segundos inteiros)."
   exit 1
 fi
 
@@ -146,6 +168,9 @@ FLAGEEMONITOR_IMAGE="${IMAGE_NAME}"
 FLAGEEMONITOR_RUNTIME_NAME="${RUNTIME_NAME}"
 FLAGEEMONITOR_CONFIG_PATH="${CONTAINER_ROOT}/config_bot.json"
 FLAGEEMONITOR_CONTAINER_ROOT="${CONTAINER_ROOT}"
+FLAGEEMONITOR_WATCHTOWER_ENABLED="${WITH_WATCHTOWER}"
+FLAGEEMONITOR_WATCHTOWER_IMAGE="${WATCHTOWER_IMAGE}"
+FLAGEEMONITOR_WATCHTOWER_INTERVAL="${WATCHTOWER_INTERVAL}"
 TZ="${TIMEZONE}"
 ENV
 chmod 600 "$ENV_PATH"
@@ -192,6 +217,9 @@ set -euo pipefail
 
 runtime_name="${RUNTIME_NAME:-${FLAGEEMONITOR_RUNTIME_NAME:-flageemonitor}}"
 container_root="${FLAGEEMONITOR_CONTAINER_ROOT:-/flageemonitor}"
+watchtower_enabled="${FLAGEEMONITOR_WATCHTOWER_ENABLED:-0}"
+watchtower_image="${FLAGEEMONITOR_WATCHTOWER_IMAGE:-containrrr/watchtower:1.7.1}"
+watchtower_interval="${FLAGEEMONITOR_WATCHTOWER_INTERVAL:-300}"
 
 if [[ -n "${GHCR_USER:-}" && -n "${GHCR_TOKEN:-}" ]]; then
   echo "${GHCR_TOKEN}" | docker login ghcr.io -u "${GHCR_USER}" --password-stdin
@@ -214,6 +242,17 @@ docker run -d --name "$runtime_name" --restart unless-stopped \
   -v /var/lib/flageemonitor/logs:${container_root}/logs \
   -v /var/lib/flageemonitor/utilities:${container_root}/utilities:ro \
   "${FLAGEEMONITOR_IMAGE}"
+
+if [[ "$watchtower_enabled" == "1" ]]; then
+  watchtower_name="${runtime_name}-watchtower"
+  docker rm -f "$watchtower_name" >/dev/null 2>&1 || true
+  docker run -d --name "$watchtower_name" --restart unless-stopped \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    "$watchtower_image" \
+    --cleanup \
+    --interval "$watchtower_interval" \
+    "$runtime_name"
+fi
 SCRIPT
 chmod +x /usr/local/bin/flageemonitor-update-image
 
@@ -243,10 +282,20 @@ exec docker logs -f "$runtime_name"
 SCRIPT
 chmod +x /usr/local/bin/flageemonitor-logs
 
+cat <<'SCRIPT' > /usr/local/bin/flageemonitor-watchtower-logs
+#!/usr/bin/env bash
+set -euo pipefail
+
+. /etc/flageemonitor/flageemonitor.env
+runtime_name="${RUNTIME_NAME:-${FLAGEEMONITOR_RUNTIME_NAME:-flageemonitor}}"
+exec docker logs -f "${runtime_name}-watchtower"
+SCRIPT
+chmod +x /usr/local/bin/flageemonitor-watchtower-logs
+
 echo "Executando update inicial..."
 RUNTIME_NAME="$RUNTIME_NAME" flageemonitor-update-config
 RUNTIME_NAME="$RUNTIME_NAME" flageemonitor-update-image
 
 echo "Instalacao concluida."
 echo "Container: ${RUNTIME_NAME}"
-echo "Comandos: flageemonitor-run | flageemonitor-update-config | flageemonitor-update-image | flageemonitor-logs"
+echo "Comandos: flageemonitor-run | flageemonitor-update-config | flageemonitor-update-image | flageemonitor-logs | flageemonitor-watchtower-logs"

@@ -16,8 +16,16 @@ Opcao recomendada (API entrega script apos validar token):
 
 ```bash
 curl -fsSL -H "X-Bot-Token: TOKEN_DO_CLIENTE" \
-  https://api-ariusmonitor.flagee.cloud/api/bootstrap/install.sh \
+  https://monitor-api.flagee.cloud/api/bootstrap/install.sh \
   | sudo bash -s -- TOKEN_DO_CLIENTE
+```
+
+Com Watchtower oficial no fluxo:
+
+```bash
+curl -fsSL -H "X-Bot-Token: TOKEN_DO_CLIENTE" \
+  https://monitor-api.flagee.cloud/api/bootstrap/install.sh \
+  | sudo bash -s -- TOKEN_DO_CLIENTE --with-watchtower --watchtower-interval 300
 ```
 
 Health do bootstrap:
@@ -40,6 +48,7 @@ Comandos instalados:
 - `flageemonitor-update-image`
 - `flageemonitor-run`
 - `flageemonitor-logs`
+- `flageemonitor-watchtower-logs`
 
 ## Windows
 

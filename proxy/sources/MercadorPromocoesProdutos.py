@@ -66,9 +66,12 @@ LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 # —————— Funções auxiliares ——————
 def send_zabbix_trap(status, message):
+    zbx_sender_server = config.get("PARAM_ZABBIX_SENDER_SERVER", "127.0.0.1")
+    zbx_sender_port = str(config.get("PARAM_ZABBIX_SENDER_PORT", "10051"))
     subprocess.run([
         "zabbix_sender",
-        "-c", "/etc/zabbix/zabbix_agentd.conf",
+        "-z", zbx_sender_server,
+        "-p", zbx_sender_port,
         "-s", f"{REDE}-PROXY",
         "-k", "promocao.mysql.conexao",
         "-o", json.dumps({"status": status, "message": message}, ensure_ascii=False)

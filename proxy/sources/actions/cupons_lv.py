@@ -16,17 +16,16 @@ import logging
 
 def send_zabbix_trap(status, message, config):
     """Envia trap para Zabbix indicando status e mensagem."""
-    conf_path = Path("/etc/zabbix/zabbix_agentd.conf")
+    zbx_sender_server = config.get("PARAM_ZABBIX_SENDER_SERVER", "127.0.0.1")
+    zbx_sender_port = str(config.get("PARAM_ZABBIX_SENDER_PORT", "10051"))
     cmd = [
         "zabbix_sender",
+        "-z", zbx_sender_server,
+        "-p", zbx_sender_port,
         "-s", f"{config['PARAM_REDE']}-PROXY",
         "-k", "concentrador.cupons.lote",
         "-o", f'{{"status":"{status}","message":"{message}"}}'
     ]
-    if conf_path.exists():
-        cmd[1:1] = ["-c", str(conf_path)]
-    else:
-        cmd[1:1] = ["-z", config.get("PARAM_ZABBIX_SERVER", "127.0.0.1"), "-p", "10051"]
     subprocess.run(cmd)
 
 

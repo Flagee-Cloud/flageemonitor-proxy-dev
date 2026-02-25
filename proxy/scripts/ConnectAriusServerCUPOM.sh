@@ -22,7 +22,9 @@ dtfim="$2"
 send_zabbix_trap() {
     local status="$1"
     local message="$2"
-    zabbix_sender -c /etc/zabbix/zabbix_agentd.conf -s "$PARAM_REDE-PROXY" -k "concentrador.mysql.conexao" -o "{\"status\":\"$status\", \"message\":\"$message\"}"
+    local zbx_sender_server="${PARAM_ZABBIX_SENDER_SERVER:-127.0.0.1}"
+    local zbx_sender_port="${PARAM_ZABBIX_SENDER_PORT:-10051}"
+    zabbix_sender -z "$zbx_sender_server" -p "$zbx_sender_port" -s "$PARAM_REDE-PROXY" -k "concentrador.mysql.conexao" -o "{\"status\":\"$status\", \"message\":\"$message\"}"
 }
 
 # Verificar se o script já está em execução

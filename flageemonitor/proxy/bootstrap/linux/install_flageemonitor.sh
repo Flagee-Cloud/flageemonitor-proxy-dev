@@ -143,6 +143,7 @@ FLAGEEMONITOR_TOKEN="${CLIENT_TOKEN}"
 FLAGEEMONITOR_API_BASE="${API_BASE}"
 FLAGEEMONITOR_CONFIG_URL="${CONFIG_URL}"
 FLAGEEMONITOR_IMAGE="${IMAGE_NAME}"
+FLAGEEMONITOR_RUNTIME_NAME="${RUNTIME_NAME}"
 FLAGEEMONITOR_CONFIG_PATH="${CONTAINER_ROOT}/config_bot.json"
 FLAGEEMONITOR_CONTAINER_ROOT="${CONTAINER_ROOT}"
 TZ="${TIMEZONE}"
@@ -189,7 +190,7 @@ set -euo pipefail
 . /etc/flageemonitor/flageemonitor.env
 [[ -f /etc/flageemonitor/ghcr.env ]] && . /etc/flageemonitor/ghcr.env
 
-runtime_name="${RUNTIME_NAME:-flageemonitor}"
+runtime_name="${RUNTIME_NAME:-${FLAGEEMONITOR_RUNTIME_NAME:-flageemonitor}}"
 container_root="${FLAGEEMONITOR_CONTAINER_ROOT:-/flageemonitor}"
 
 if [[ -n "${GHCR_USER:-}" && -n "${GHCR_TOKEN:-}" ]]; then
@@ -220,7 +221,8 @@ cat <<'SCRIPT' > /usr/local/bin/flageemonitor-run
 #!/usr/bin/env bash
 set -euo pipefail
 
-runtime_name="${RUNTIME_NAME:-flageemonitor}"
+. /etc/flageemonitor/flageemonitor.env
+runtime_name="${RUNTIME_NAME:-${FLAGEEMONITOR_RUNTIME_NAME:-flageemonitor}}"
 container_root="${FLAGEEMONITOR_CONTAINER_ROOT:-/flageemonitor}"
 if [[ $# -lt 1 ]]; then
   echo "Uso: flageemonitor-run <acao> [args]"
@@ -235,7 +237,8 @@ cat <<'SCRIPT' > /usr/local/bin/flageemonitor-logs
 #!/usr/bin/env bash
 set -euo pipefail
 
-runtime_name="${RUNTIME_NAME:-flageemonitor}"
+. /etc/flageemonitor/flageemonitor.env
+runtime_name="${RUNTIME_NAME:-${FLAGEEMONITOR_RUNTIME_NAME:-flageemonitor}}"
 exec docker logs -f "$runtime_name"
 SCRIPT
 chmod +x /usr/local/bin/flageemonitor-logs

@@ -8,7 +8,7 @@
 - `05-migration-plan.md`: fases de migracao sem quebra.
 - `06-endpoint-compatibility.md`: diretrizes de compatibilidade para client endpoint.
 - `07-repositories-and-access.md`: estrategia de repositorios (interno vs deploy cliente).
-- `08-proxy-deploy-promotion.md`: fluxo historico (descontinuado) e modelo image-only.
+- `08-proxy-deploy-promotion.md`: arquivo de legado (historico).
 - `09-release-playbook.md`: playbook de publicacao para server/proxy-dev/image publish.
 - `10-ci-budget-mode.md`: estrategia de CI/CD de baixo consumo para GitHub Free.
 - `11-versioning-and-release-tags.md`: convencao de versao e checklist curto de release.

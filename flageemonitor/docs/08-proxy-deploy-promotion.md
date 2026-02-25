@@ -1,26 +1,12 @@
-# Proxy Deploy Promotion (Descontinuado)
+# Proxy Deploy Promotion (Arquivo de Legado)
 
-Este fluxo foi descontinuado.
+Este documento foi mantido apenas como registro historico.
 
-## Motivo
+Fluxo atual de cliente: somente imagem no GHCR.
 
-- O repositorio `flageemonitor-proxy` agora e image-only.
-- Nao promovemos mais runtime/scripts para repositorio de cliente.
-
-## Fluxo atual
-
-1. Regenerar runtime protegido:
+Use:
 
 ```bash
 bash /ariusmonitor/build/build_protegido.sh
-```
-
-2. Publicar imagem:
-
-```bash
 /ariusmonitor/flageemonitor/proxy/scripts/docker/publish_image.sh
 ```
-
-## Observacao
-
-- O script `tools/release/promote_proxy_deploy.sh` permanece apenas por compatibilidade historica e retorna erro orientando o novo fluxo.

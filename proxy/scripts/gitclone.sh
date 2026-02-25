@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "gitclone.sh esta fora do fluxo oficial do FlageeMonitor (image-only)." >&2
+echo "Use o bootstrap via API e publish de imagem no GHCR." >&2
+echo "Exemplo: curl -fsSL -H \"X-Bot-Token: <TOKEN>\" https://monitor-api.flagee.cloud/api/bootstrap/install.sh | bash" >&2
+exit 1
+
 # -----------------------------------------------------------------------------
 # Configurações de cores ANSI
 VERDE='\033[0;32m'
@@ -15,7 +20,7 @@ DEST_DIR="/ariusmonitor"
 PYTHON_COMPAT="3.12"
 PYTHON_BIN="/usr/bin/python${PYTHON_COMPAT}"
 VENV_DIR="${DEST_DIR}/venv"
-REPO_URL="${FLAGEEMONITOR_DEPLOY_REPO_URL:-git@github.com:Flagee-Cloud/flageemonitor-proxy.git}"
+REPO_URL="${FLAGEEMONITOR_DEPLOY_REPO_URL:-}"
 REPO_BRANCH="${FLAGEEMONITOR_DEPLOY_REPO_BRANCH:-main}"
 
 # -----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 # Repositories and Access Model
 
-Este documento define a separacao entre repositorios internos e repositorios usados para deploy no ambiente do cliente.
+Este documento define a separacao entre repositorios internos e artefatos de deploy no ambiente do cliente.
 
 ## Repositorios oficiais
 
@@ -10,14 +10,10 @@ Este documento define a separacao entre repositorios internos e repositorios usa
 2. Proxy DEV (interno de desenvolvimento)
 - `git@github.com:Flagee-Cloud/flageemonitor-proxy-dev.git`
 
-3. Proxy (repositorio image-only)
-- `git@github.com:Flagee-Cloud/flageemonitor-proxy.git`
-
 ## Politica de visibilidade
 
 - `flageemonitor-server`: acesso apenas equipe interna Flagee.
 - `flageemonitor-proxy-dev`: privado interno (codigo/fundacao/iteracao).
-- `flageemonitor-proxy`: image-only. Nao hospeda mais runtime/scripts de deploy.
 
 ## Chaves e autenticacao
 
@@ -30,17 +26,6 @@ Este documento define a separacao entre repositorios internos e repositorios usa
 - Publicacao cliente ocorre via imagem no GHCR.
 - Cliente consome apenas imagem versionada.
 - Nenhum fluxo de cliente deve depender de `flageemonitor-server`.
-
-## Bootstrap legado
-
-No script legado `proxy/scripts/gitclone.sh`, o repositorio default passou a ser:
-
-- `git@github.com:Flagee-Cloud/flageemonitor-proxy.git`
-
-Com overrides opcionais:
-
-- `FLAGEEMONITOR_DEPLOY_REPO_URL`
-- `FLAGEEMONITOR_DEPLOY_REPO_BRANCH`
 
 ## Publicacao de cliente
 

@@ -55,7 +55,13 @@ Exemplo:
 .\install_flageemonitor.ps1 -ClientToken TOKEN_DO_CLIENTE -RuntimeName flageemonitor
 ```
 
-Wrappers gerados em `C:\ProgramData\FlageeMonitor\bin`.
+Watchtower tambem e obrigatorio no bootstrap Windows.
+
+Wrappers gerados em `C:\ProgramData\FlageeMonitor\bin`:
+
+- `flageemonitor-run.ps1`
+- `flageemonitor-logs.ps1`
+- `flageemonitor-watchtower-logs.ps1`
 
 ## Variaveis principais
 

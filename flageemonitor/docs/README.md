@@ -13,5 +13,6 @@
 - `10-ci-budget-mode.md`: estrategia de CI/CD de baixo consumo para GitHub Free.
 - `11-versioning-and-release-tags.md`: convencao de versao e checklist curto de release.
 - `12-provider-onboarding-checklist.md`: checklist para onboard de novos providers.
+- `13-proxy-architecture-complete.md`: arquitetura completa do proxy e papeis operacionais.
 - `proxy/providers/zanthus/contracts/action-translation.v1.yaml`: naming externo Zanthus para canônico.
 - `adr/`: decisoes arquiteturais registradas.

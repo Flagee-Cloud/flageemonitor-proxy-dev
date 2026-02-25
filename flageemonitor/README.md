@@ -39,3 +39,4 @@ flageemonitor/
 
 Veja o plano em `docs/05-migration-plan.md` e a diretriz de endpoint em `docs/06-endpoint-compatibility.md`.
 Modelo de repositorios: `docs/07-repositories-and-access.md`.
+Arquitetura completa do proxy: `docs/13-proxy-architecture-complete.md`.

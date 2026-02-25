@@ -7,6 +7,8 @@ param(
   [string]$ImageName = "ghcr.io/flagee-cloud/flageemonitor-client:latest",
   [string]$RuntimeName = "flageemonitor",
   [string]$ContainerRoot = "/flageemonitor",
+  [string]$WatchtowerImage = "containrrr/watchtower:1.7.1",
+  [int]$WatchtowerInterval = 300,
   [string]$GhcrUser,
   [string]$GhcrToken
 )
@@ -31,6 +33,9 @@ catch {
 
 if (($GhcrUser -and -not $GhcrToken) -or ($GhcrToken -and -not $GhcrUser)) {
   throw "GHCR_USER e GHCR_TOKEN devem ser informados juntos."
+}
+if ($WatchtowerInterval -lt 30) {
+  throw "WatchtowerInterval invalido. Use valor >= 30 segundos."
 }
 
 $baseDir = Join-Path $env:ProgramData "FlageeMonitor"
@@ -65,8 +70,11 @@ $timezone = if ($config.TIMEZONE) { $config.TIMEZONE } else { "America/Sao_Paulo
   "FLAGEEMONITOR_API_BASE=\"$ApiBase\"",
   "FLAGEEMONITOR_CONFIG_URL=\"$configUrl\"",
   "FLAGEEMONITOR_IMAGE=\"$ImageName\"",
+  "FLAGEEMONITOR_RUNTIME_NAME=\"$RuntimeName\"",
   "FLAGEEMONITOR_CONFIG_PATH=\"$ContainerRoot/config_bot.json\"",
   "FLAGEEMONITOR_CONTAINER_ROOT=\"$ContainerRoot\"",
+  "FLAGEEMONITOR_WATCHTOWER_IMAGE=\"$WatchtowerImage\"",
+  "FLAGEEMONITOR_WATCHTOWER_INTERVAL=\"$WatchtowerInterval\"",
   "TZ=\"$timezone\""
 ) | Set-Content -Path $envPath -Encoding UTF8
 
@@ -100,6 +108,20 @@ docker run -d --name $RuntimeName --restart unless-stopped `
   -v $mountUtilities `
   $ImageName | Out-Null
 
+$watchtowerName = "${RuntimeName}-watchtower"
+$existingWatchtower = docker ps -aq -f "name=^${watchtowerName}$"
+if ($existingWatchtower) {
+  docker rm -f $watchtowerName | Out-Null
+}
+
+docker pull $WatchtowerImage | Out-Null
+docker run -d --name $watchtowerName --restart unless-stopped `
+  -v //var/run/docker.sock:/var/run/docker.sock `
+  $WatchtowerImage `
+  --cleanup `
+  --interval $WatchtowerInterval `
+  $RuntimeName | Out-Null
+
 $runScript = @"
 param([Parameter(ValueFromRemainingArguments = `$true)][string[]]`$Args)
 docker exec $RuntimeName ${ContainerRoot}/run_action.sh @Args
@@ -111,6 +133,10 @@ $logsScript = "docker logs -f $RuntimeName"
 $logsPath = Join-Path $binDir "flageemonitor-logs.ps1"
 Set-Content -Path $logsPath -Value $logsScript -Encoding UTF8
 
+$watchtowerLogsScript = "docker logs -f ${RuntimeName}-watchtower"
+$watchtowerLogsPath = Join-Path $binDir "flageemonitor-watchtower-logs.ps1"
+Set-Content -Path $watchtowerLogsPath -Value $watchtowerLogsScript -Encoding UTF8
+
 Write-Host "Instalacao concluida."
 Write-Host "Container: $RuntimeName"
-Write-Host "Wrappers: $runPath | $logsPath"
+Write-Host "Wrappers: $runPath | $logsPath | $watchtowerLogsPath"
